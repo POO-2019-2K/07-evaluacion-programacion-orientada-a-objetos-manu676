@@ -1,6 +1,7 @@
 export default class Homework {
     constructor(homework) {
     this._name = homework.name;
+    //console.log(this._theme);
     this._theme = homework.theme.toUpperCase();
     this._dateHandIt = new Date (homework.dateHandIt);
     this._notes = homework.notes;
@@ -34,7 +35,7 @@ get notes() {
     return this._notes;
 }
 
-
+//Para que aparesca en la edicion de datos
 _getNumberAs2Digits(number){
     if (number < 10){
     //se convierte en string
@@ -43,7 +44,7 @@ _getNumberAs2Digits(number){
     return number;
 }
 //Fechas para la edicion de estos
-getFechaBirthForDate(){
+getDateToDoForDate(){
     //descomposicion
     let {dateHandIt} = this;
     let date = dateHandIt.getFullYear() + "-" + 
@@ -52,7 +53,7 @@ getFechaBirthForDate(){
     return date;
 }
 //Fecha para cumpleaños 
-getFechaBirthAsString() {
+getDateHandItAsString() {
     let date =
     this._dateHandIt.getDate() +
     "/" +
@@ -62,12 +63,11 @@ getFechaBirthAsString() {
 
     return date;
 }
-getAge() {
+getDaysToDo() {
     let oneDay = 24 * 60 * 60 * 1000;
-    let oneYear = oneDay * 365;
-    let differenceMs = new Date() - this._dateHandIt;
-    let age = Math.trunc(differenceMs / oneYear);
+    let differenceMs =  this._dateHandIt - new Date() ;
+    let day = Math.trunc(differenceMs / oneDay);
 
-    return age;
+    return day;
 }
 }

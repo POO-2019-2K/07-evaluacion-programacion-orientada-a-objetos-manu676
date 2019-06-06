@@ -1,5 +1,6 @@
 import Homework from "./homework.js";
-import Bottoms from "./bottoms.js";
+import ButtomDelete from "./buttomDel.js";
+import ButtomEdit from "./butttomEdi.js";
 
 export default class RegisterH{
     constructor(tableAgenda, tableInfo){
@@ -8,10 +9,11 @@ export default class RegisterH{
         //Array de las tareas 
         this._homeworks = [];
         //Contador de las tareas registradas
-        this._numTareas = 0;
+        this._numHomeworks = 0;
+        //localStorage.removeItem("HomeworksToDo");
         //Iniciar en la tabla
         this._initToTable();
-        //localStorage.removeItem("HomeworksToDo");
+        
     }
     _initToTable(){
         let lsHomework = JSON.parse(localStorage.getItem("HomeworksToDo"));
@@ -20,9 +22,74 @@ export default class RegisterH{
         }
         lsHomework.forEach((hmws,index)=>{
             hmws.dateHandIt = new Date (hmws.dateHandIt);
-
+            console.log(hmws);
             this._addToTheTable(new Homework(hmws));
         });
+    }
+    _objetHomework(homework){
+        //objeto de LocalStorage("HomeworksToDo")
+        let objHomeworks={
+            name : homework.name,
+            theme : homework.theme,
+            dateHandIt : homework.dateHandIt,
+            age: homework.getDaysToDo(),
+            notes : homework.notes
+        };
+        this._homeworks.push(objHomeworks);
+    }
+    _contadorContactos(){
+        this._tableInfo.rows[0].cells[1].innerHTML = this._numHomeworks;
+    }
+    _addToTheTable(homework){
+        let row = this._tableAgenda.insertRow(-1);
+        //tabla grande
+        let cellName = row.insertCell(0);
+        let cellTheme = row.insertCell(1);
+        let cellDateHandIt= row.insertCell(2);
+        let cellEdad = row.insertCell(3);
+        let cellNotes = row.insertCell(4);
+        row.insertCell(5);
+        row.insertCell(6);
+
+        cellName.innerHTML = homework.name;
+        cellTheme.innerHTML = homework.theme;
+        cellDateHandIt.innerHTML = homework.getDateHandItAsString();
+        cellEdad.innerHTML = homework.getDaysToDo();
+        cellNotes.innerHTML = homework.notes;
+
+        let buttomDelete = new ButtomDelete(homework);
+        buttomDelete._addButtonDelete(row, homework);
+        let buttomEdit = new ButtomEdit(homework);
+        buttomEdit._addButtomEdit(row,homework);
+            //tabla pequeña
+        this._numHomeworks++;
+        this._contadorContactos();
+
+        this._objetHomework(homework);
+    }    
+    _findHomework(name){
+        let findIt = -1
+        //hmws = homeworks
+        this._homeworks.forEach((hmws,index) =>{
+            if(hmws.name === name){
+                findIt = index;
+                return;
+            }
+        });
+        return findIt;
+    }
+    addHomeworkToDo(homework){
+        let encontrar = this._findHomework(homework.name);
+        if (encontrar >=0){
+            swal.fire({
+            type: "error",
+            title: "error",
+            text: "Esa tarea ya esta registrada"
+            });
+            return;
+        } else location.reload();
+        this._addToTheTable(homework);
+        localStorage.setItem("HomeworksToDo",JSON.stringify(this._homeworks));
     }
 
 }
