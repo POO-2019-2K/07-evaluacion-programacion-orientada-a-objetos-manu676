@@ -60,7 +60,7 @@ export default class ButtomEdit{
     iNotes.value= homework.notes;
     row.cells[4].innerHTML="";
     row.cells[4].appendChild(iNotes);
-    let inputs = {
+    var inputs = {
         iName : iName,
         iTheme : iTheme,
         iDateToDo : iDateToDo,
@@ -69,17 +69,16 @@ export default class ButtomEdit{
     //evento de guardar
     this._buttomsCancelSave(row,homework,inputs);
     }   
-    /*getDateAsString(inputs) {
-    iDateToDo = inputs.iDateToDo;
-    let date =
-    iDateToDo.getDate() +
+    /*getDateAsString(fecha) {
+    let date = fecha.getDate() +
     "/" +
-    this._months[iDateToDo.getMonth()] +
+    this._months[fecha.getMonth()] +
     "/" +
-    iDateToDo.getFullYear();
+    fecha.getFullYear();
 
     return date;
     }*/
+    
     _buttomsCancelSave(row,homework,inputs){    
     let btnSave= document.createElement("input");
     btnSave.type = "button";
@@ -90,7 +89,10 @@ export default class ButtomEdit{
     btnSave.addEventListener("click",()=>{
         let iName = inputs.iName;
         let iTheme = inputs.iTheme;
-        let iDateToDo =  inputs.iDateToDo;
+        let iDateToDo = inputs.iDateToDo;
+        //console.log(iName); 
+        //console.log(iDateToDo);
+        //console.log(dateString);
         let iNotes = inputs.iNotes;
 
         let newHomework = {
@@ -116,10 +118,19 @@ export default class ButtomEdit{
     }
     _saveEdit(row, homework, newHomework){
         //Buscar su ubicación 
+        let newDate = newHomework.dateHandIt;
         let pos = this._findHomework(homework.name);
+        console.log(newDate);
+        let dateString = newDate.split("-");
+        newDate = new Date(dateString[0], dateString[1], dateString[2]);
+        console.log(dateString);
+        //new Date(newDate);
+        //dateString = dateString.getDateHandItAsString(row,homework);
+        //this.getDateAsString(dateString);
+        //dateString.getDateHandItAsString()
         this._homeworks[pos] = newHomework;
         localStorage.setItem("HomeworksToDo", JSON.stringify(this._homeworks));
-        location.reload();
+        //location.reload();
         this._cancelEdit(row, new Homework(newHomework));
     }
     _cancelEdit(row, homework){  
@@ -146,4 +157,5 @@ export default class ButtomEdit{
         });
         return findIt;
     }
+
 }

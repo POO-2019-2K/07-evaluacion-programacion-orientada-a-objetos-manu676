@@ -10,7 +10,7 @@ export default class RegisterH{
         this._homeworks = [];
         //Contador de las tareas registradas
         this._numHomeworks = 0;
-        //localStorage.removeItem("HomeworksToDo");
+        //  localStorage.removeItem("HomeworksToDo");
         //Iniciar en la tabla
         this._initToTable();
         
@@ -22,9 +22,73 @@ export default class RegisterH{
         }
         lsHomework.forEach((hmws,index)=>{
             hmws.dateHandIt = new Date (hmws.dateHandIt);
-            console.log(hmws);
             this._addToTheTable(new Homework(hmws));
         });
+    }
+    _findOrder(selections){
+        if ( selections === "orderName"){
+            this.orderName();
+        }
+        if ( selections === "orderDateToDo" ){
+            this.orderDaysToDo() ;
+        } 
+        else if ( selections === "orderTheme"){
+            this.orderThemes();
+        }
+    }
+    orderDaysToDo() {
+        let newOrder = [];
+        newOrder = this._homeworks.slice(-this._numHomeworks);
+        newOrder = newOrder.sort(function (a, b) {
+            return a.age - b.age;
+        })
+
+        localStorage.setItem("HomeworksToDo",JSON.stringify(newOrder));
+        this._deleteTable() ;
+        this._initToTable();
+        location.reload();
+    }
+    orderThemes(){
+        let newOrder = [];
+        newOrder = this._homeworks.slice(-this._numHomeworks);
+        newOrder = newOrder.sort(function (a,b){
+            if (a.theme < b.theme) {
+                return -1;
+            } 
+            if (a.theme > b.theme){
+                return 1; 
+            } return 0;
+        })
+        //Save in local Storange
+        localStorage.setItem("HomeworksToDo", JSON.stringify(newOrder));
+        this._deleteTable();
+        this._initToTable();
+        location.reload();
+    }
+    orderName() {
+        let newOrder = [];
+        newOrder = this._homeworks.slice(-this._numHomeworks);
+        newOrder =newOrder.sort(function (a, b) {
+            if (a.name < b.name) {
+                return -1;
+            } 
+            if (a.name > b.name){
+                return 1; 
+            } return 0;
+    });
+    //Save in local Storange
+    localStorage.setItem("HomeworksToDo", JSON.stringify(newOrder));
+    this._deleteTable();
+    this._initToTable();
+    location.reload();
+    }
+    _deleteTable() { 
+        let table;
+        for(table=this._numHomeworks; table>0; table--){
+            //console.log(this._numHomeworks);
+            this._tableAgenda.deleteRow(table);
+        }
+        this._numHomeworks = 0;
     }
     _objetHomework(homework){
         //objeto de LocalStorage("HomeworksToDo")

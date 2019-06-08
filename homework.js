@@ -1,11 +1,11 @@
 export default class Homework {
-    constructor(homework) {
+    constructor(homework, newHomework) {
     this._name = homework.name;
     //console.log(this._theme);
     this._theme = homework.theme.toUpperCase();
     this._dateHandIt = new Date (homework.dateHandIt);
     this._notes = homework.notes;
-    
+
     this._months = [
         "Ene",
         "Feb",
@@ -52,7 +52,7 @@ getDateToDoForDate(){
     this._getNumberAs2Digits(dateHandIt.getDate());
     return date;
 }
-//Fecha para cumpleaños 
+//Fecha para entrega de tarea
 getDateHandItAsString() {
     let date =
     this._dateHandIt.getDate() +
@@ -63,6 +63,7 @@ getDateHandItAsString() {
 
     return date;
 }
+
 getDaysToDo() {
     let oneDay = 24 * 60 * 60 * 1000;
     let differenceMs =  this._dateHandIt - new Date() ;

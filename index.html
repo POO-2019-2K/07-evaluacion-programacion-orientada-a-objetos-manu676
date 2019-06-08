@@ -14,22 +14,28 @@
 <link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
-<div class="jumbotron">
-    <div class="container-fluid">
-        <div class="col-md-12">
-            <h1>Tareas Pendientes</h1>
-            <p>Registro de tareas por hacer</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="./images/logo.png" id="logo">
         </div>
-    <!-- Acomodar por un SELECT 
-        <div class="btn-group" role="group" aria-label="Basic example">
-        <select id="acomodo">
-            <option value="Basico">Ordenamiento Basico</option>
-            <option value="acomAlfa">Ordenamiento Alfabeticamente</option>
-            <option value="acomEdad">Ordenamiento Edad</option>
-        </select>
-    </div>
-    -->
-    </div>
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <div class="container-fluid"> 
+                    <h1>Tareas Pendientes</h1>
+                    <p>Registro de tareas por hacer</p>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <select id="order">
+                        <option value="Basic">Basic Sort</option>
+                        <option value="orderName">Homeworks Sort</option>
+                        <option value="orderDateToDo">Date to Do Sort</option>
+                        <option value="orderTheme">Theme Sort </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>   
 </div>
 <div class="container-fluid">
     <div class="row">

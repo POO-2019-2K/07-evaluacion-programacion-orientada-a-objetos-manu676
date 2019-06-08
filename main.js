@@ -35,8 +35,20 @@ document.querySelector("#btnAdd").addEventListener("click", () => {
     }
 
     form.classList.add("was-validated"); 
-    //location.reload();
 });
+let selector = document.getElementById("order");
+selector.addEventListener("change",()=>{
+    let selections = selector.value;
+    if (selections === "Basic"){
+        swal.fire({
+            type: "error",
+            title: "error",
+            text : "Choose an Option, THANK U :3"
+            });
+    }else{
+        agendaHmw._findOrder(selections);
+    }
+})
 }
 }
 let mainContactos = new Main();
