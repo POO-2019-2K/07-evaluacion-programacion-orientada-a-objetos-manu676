@@ -7,11 +7,23 @@ thead{
     border: 5px;
     border-color: black;
 }
+.principal{
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
 #logo{
     margin-left: 45px;
     margin-top: 25%;
     width: 150px;
     height: 150px;
+}
+table thead tr:hover{   
+    cursor: auto;
+}
+table tr:hover{
+    background-color: rgba(128, 128, 128, 0.377);
+    cursor: pointer;
 }
 /*Inputs and Buttons css*/
 #name{
